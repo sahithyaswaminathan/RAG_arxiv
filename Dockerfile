@@ -6,7 +6,7 @@ COPY ./requirements.txt /code/requirements.txt
 COPY ./config.yml /code/config.yml
 COPY ./src /code/src/
 COPY ./.streamlit /code/.streamlit/
-COPY ./images/maestro.png /code/images/maestro.png
+COPY ./images/bare_bears.jpg /code/images/bare_bears.jpg
 COPY ./images/streamlit_app.png /code/images/streamlit_app.png
 
 EXPOSE 8501

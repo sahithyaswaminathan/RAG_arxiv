@@ -83,8 +83,11 @@ if query := st.chat_input(
     st.session_state["past"].append(query) #appending past queries
     try:
         with st.spinner('Reading the best papers...'):
+            command = 'python'
+            script_path = 'src/utils/arxiv_scrapper.py'
+            args = [command, script_path, '--query', "'{query}'", '--num_result', '{APPCFG.articles_to_search}']
             process = subprocess.Popen(
-                f"python src/utils/arxiv_scrapper.py --query '{query}' --num_result {APPCFG.articles_to_search} "
+                args=args
             )
             out, err = process.communicate()
             errcode = process.returncode

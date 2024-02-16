@@ -102,6 +102,8 @@ streamlit==1.29.0
 streamlit-chat==0.1.1
 tenacity==8.2.3
 transformers==4.37.2
+torch-transformers==1.0.4
+torch==2.2.0
 tiktoken==0.5.2
 tldextract==5.1.1
 toml==0.10.2

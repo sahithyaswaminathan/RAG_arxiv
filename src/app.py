@@ -11,7 +11,8 @@ APPCFG = LoadConfig()
 # ===================================
 # Setting page title and header
 # ===================================
-im = Image.open("images/bear_bears.jpg")
+image_path = os.path.abspath("images/streamlit_app.png")
+im = Image.open(image_path)
 #os.environ["OPENAI_API_KEY"] = st.secrets["openai_key"]
 
 st.set_page_config(page_title="RAG-Maestro", page_icon=im, layout="wide")
@@ -61,7 +62,7 @@ with st.sidebar:
         unsafe_allow_html=True,
     )
     # st.sidebar.title("An agent that read and summarizethe the news for you")
-    st.sidebar.image("images/bare_bears.jpg", use_column_width=True)
+    st.sidebar.image("/Users/sahithya/Documents/Study Materials/Machine Learning/LLM/images/bare_bears.jpg", use_column_width=True)
     clear_button = st.sidebar.button("Clear Conversation", key="clear")
     st.markdown(
     "<a style='display: block; text-align: center;' href='https://github.com/sahithyaswaminathan' target='_blank'> Sahithya Swaminathan</a>",
@@ -83,17 +84,20 @@ if query := st.chat_input(
     st.session_state["past"].append(query) #appending past queries
     try:
         with st.spinner('Reading the best papers...'):
-            command = 'python'
-            script_path = 'src/utils/arxiv_scrapper.py'
-            args = [command, script_path, '--query', "'{query}'", '--num_result', '{APPCFG.articles_to_search}']
+            command = "python"
+            script_path = "src/utils/arxiv_scrapper.py"
+            args = [command, script_path,"--query", '"{query}"', "--num_result", "{APPCFG.articles_to_search}"]
             process = subprocess.Popen(
-                args=args
+                args=args,
+                #shell=True,
             )
             out, err = process.communicate()
             errcode = process.returncode
         
         with st.spinner("Reading them..."):
             data = load_data()
+            print('load data done')
+            #print(data)
             index = RAG(APPCFG, _docs=data)
             query_engine = index.as_query_engine(
                 response_mode="tree_summarize",
